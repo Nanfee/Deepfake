@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鹰眼</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+<div class="header">
+    <div class="header-logo">
+        <a class="fl-logo" href="home.html"></a>
+    </div>
+    <ul class="header-nav">
+        <li><a href="/detection/">检测</a></li>
+        <li><a href="/dataset/">数据集</a></li>
+    </ul>
+    <div class="header-set">
+        <a href="/user/login">登录</a>
+        |
+        <a href="/user/register">注册</a>
+    </div>
+    <div class="header-info">
+        <div id="user-info">
+            <a href="userinfo.html">
+                <img class="layui-nav-img" id="user_pic_url" src="{% static 'images/pic-moren.png' %}">
+                <i class="layui-icon layui-icon-triangle-d"></i>
+            </a>
+            <div class="header-menu" id="info-menu">
+                <ul>
+                    <li><a href="userinfo.html">我的资料</a></li>
+                    <li><a href="writetip.html">写攻略</a></li>
+                    <li><a id="exit" href="#">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="carousel">
+    <div class="layui-carousel" id="test1">
+        <div carousel-item>
+            <div>
+                <img src="{% static 'images/back1.jpeg' %}">
+            </div>
+            <div><img src="{% static 'images/back2.jpeg' %}"></div>
+            <div><img src="{% static 'images/back3.jpeg' %}"></div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="tips">
+        <div class="layui-panel">
+            <div style="padding: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;近年来，深度伪造（Deepfake）技术已成为了国家、社会和军事安全领域的不容忽视的热点研究话题之一。深度伪造来源于生成对抗网络(GAN)的出现和发展，其通过采用深度学习和人工智能等前沿技术，将现有图像、音频或视频中的人物替换成其他人的肖像。因此，检测深度伪造图片和视频成为了当务之急！</div>
+        </div>
+    </div>
+    <div class="rank">
+        <a href="/detection/"><i class="layui-icon layui-icon-find-fill"></i><p>探索Deepfake！</p></a>
+    </div>
+</div>
+
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script>
+    layui.use(['carousel', 'element'], function () {
+        var carousel = layui.carousel;
+        carousel.render({
+            elem: '#test1',
+            width: '100%',
+            height: '530px', //设置容器宽度,
+            arrow: 'always' //始终显示箭头
+        });
+    });
+</script>
+</html>

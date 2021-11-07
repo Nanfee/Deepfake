@@ -1,0 +1,63 @@
+{% load static %}
+
+<div class="layui-header header header-demo">
+    <div class="layui-fluid">
+        <a class="logo" href="/home/">
+            <img src="{% static 'images/logo.png' %}" alt="logo">
+        </a>
+        <div class="menu1">
+            <ul class="layui-nav">
+                <li class="layui-nav-item">
+                    <a href="/detections/">检测</a>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="/datasets/">数据集</a>
+                </li>
+                <li class="layui-nav-item ">
+                    <a href="/reinforced/">图像加固</a>
+                </li>
+            </ul>
+        </div>
+        <div class="func layui-inline">
+            <a href="/user/login/">登录</a>
+            |
+            <a href="/user/register/">注册</a>
+        </div>
+        <div class="user-info">
+            <ul class="layui-nav">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><img id="user-img" src="{% static 'images/pic-moren.png' %}" class="layui-nav-img"/><div id="user-name" style="display: inline"></div></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">信息修改</a></dd>
+                        <dd><a href="/user/logout/">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script>
+    var token = $.cookie('token');
+    if(token != null){
+        $('.func').hide();
+        //to get the info og user#}
+        layui.use('element', function (){
+            var element = layui.element;
+            $.ajax({
+                url: '/user/info/',
+                type: 'POST',
+                async: true,// 异步上传
+                success: function(data) {
+                    console.log(data);
+                    $('#user-img').attr('src', data.img);
+                    $('#user-name').append(data.name);
+                }
+            });
+        });
+    }else{
+        $('.user-info').hide();
+    }
+</script>

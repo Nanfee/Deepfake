@@ -1,0 +1,90 @@
+.layui-layout-admin .layui-header{
+    background-color: white;
+    font-size: 20px;
+    box-shadow:2px 2px 1px #aaaaaa;
+}
+.layui-header .menu1 .layui-nav{
+    top: 0;
+    left: 180px;
+    position: absolute;
+}
+.layui-header .user-info .layui-nav{
+    top: 0;
+    right: 15px;
+    position: absolute;
+}
+.layui-nav .layui-nav-item a{
+    color: #7f7f7f;
+    font-size: 15px;
+}
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
+    color: #ff9d00;
+}
+.layui-nav .layui-this:after, .layui-nav-bar{
+    background-color: #ff9d00;
+}
+.logo img{
+    padding-left: 20px;
+    height: 60px;
+}
+.layui-header .func{
+    top: 20px;
+    right: 30px;
+    font-size: 14px;
+    color: #ff9d00;
+    position: absolute;
+}
+.layui-header .func a{
+    color: #FF9D00;
+}
+.layui-header .func a:hover{
+    color: #FFB640;
+}
+body{
+    background-color: #F5F5F5;
+    /*font-family:"黑体";*/
+}
+.layui-carousel img {
+    width: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel {
+    height: 560px;
+}
+
+.main {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.main .tips {
+    float: left;
+    width: 440px;
+    margin: 50px 40px 30px 20px;
+}
+
+.main .tips .layui-panel{
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.main .rank {
+    float: right;
+    width: 450px;
+    height: 300px;
+    margin-top: 150px;
+    text-align: center;
+}
+
+.main .rank a{
+    color: #ff9d00;
+    font-size: 30px;
+}
+
+.main .rank a i{
+    font-size: 150px;
+    margin-bottom: 30px;
+}

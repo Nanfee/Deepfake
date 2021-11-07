@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>检测</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detections.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div id="header" style="height: 60px"></div>
+    <div class="detections-home">
+        <div class="d-logo">
+            <i class="layui-icon layui-icon-chart-screen"></i>
+        </div>
+        <div class="d-text">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人脸深度伪造视频检测是本课题研究的关键问题。深度伪造视频检测的算法可以分为传统算法与深度学习算法两个大类。传统算法的思路主要是针对特定问题，手工设计特征，通过对图像特征进行提取，再进行分类，这类方法的优势在于可解释性强，但是检测性能近年来逐渐被基于深度学习的算法所赶超。
+                近年来，基于深度学习的深度伪造视频检测技术得到了日益广泛的关注和应用。研究思路之一是针对伪造视频缺陷，提取相关特征对视频进行分析，例如，利于Deepfakes技术受限于数据集的影响，生成的视频中人物眨眼频率与人眼真实眨眼频率不符，生成的视频中人物嘴部动作与音频不一致等等......
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前，本平台已经集成了如下的检测算法：</p>
+        </div>
+    </div>
+    <div class="detections-list">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header">
+                      <a href="/detections/two_stream/">双分支网络</a>
+                  </div>
+                  <div class="layui-card-body">
+                    * 通过非线性映射的双分支神经网络模型对于低分辨率人脸的识别具有良好的性能提升<br>
+                    * 通过删除VGG后层，在大幅减少训练参数的同时，提升了分类性能<br>
+                    * 通过实验验证了模型的有效性，以及SRNet的小型super-solution网络对于模型的影响
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="/detections/attention/">注意力机制</a></div>
+                  <div class="layui-card-body">
+                    卡片式面板面板通常用于非白色背景色的主体内<br>
+                    从而映衬出边框投影
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $('#header').load('/common/header/', function (responseTest, textStatus, XMLHttpRequest){
+        $('.menu1 .layui-nav').children().eq(0).addClass('layui-this');
+    });
+</script>
+</html>

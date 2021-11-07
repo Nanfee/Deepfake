@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>跨GAN检测</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detections.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div id="header"></div>
+    <div class="layui-side">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree layui-nav-side">
+                <li class="layui-nav-item"><a href="/detections/low_resolution">低分辨率检测</a></li>
+                <li class="layui-nav-item layui-this"><a href="/detections/cross_gan/">跨GAN检测</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div class="carousel">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                    <div><img src="{% static 'images/attention1.png' %}"></div>
+                    <div><img src="{% static 'images/attention2.png' %}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="info">
+            <h1>论文信息</h1>
+            <div class="paper_info">
+                <p class="paper_title">{{ paper.paper_title }}</p>
+                <p class="paper_title_en">{{ paper.paper_title_en }}</p>
+            </div>
+            <ul class="authors">
+                {% for author in paper.paper_authors.all %}
+                    <li><i class="layui-icon layui-icon-username"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ author.author_name }}
+                        - {{ author.author_department }}</li>
+                {% endfor %}
+            </ul>
+            <div class="paper_intro">
+                <p>摘要</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{ paper.paper_intro }}
+            </div>
+            <div class="paper_summary">
+                <p>总结</p>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{ paper.paper_summary }}
+            </div>
+        </div>
+        <div class="detect">
+            <h1>检测流程</h1>
+            <div class="select">
+                <p>1. 图片选择</p>
+                <button class="layui-btn" id="pic-select">+</button>
+                <div class="preview"></div>
+            </div>
+            <div class="upload">
+                <p>2. 图片上传</p>
+                <div class="upload-btn">
+                    <button id="pic-upload"><i class="layui-icon layui-icon-upload"></i>&nbsp;&nbsp;上传</button>
+                </div>
+            </div>
+            <div class="result">
+                <p>3. 检测结果</p>
+                <div class="tip">
+                    <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>
+                    <br>上传检测中
+                </div>
+                <div class="res"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $('#header').load('/common/header/', function (responseTest, textStatus, XMLHttpRequest){
+        $('.menu1 .layui-nav').children().eq(0).addClass('layui-this');
+    });
+    function getElementTop(element){
+        var actualTop = element.offsetTop;
+        var current = element.offsetParent;
+        while (current !== null){
+            actualTop += current.offsetTop;
+            current = current.offsetParent;
+        }
+        return actualTop;
+    };
+    layui.use(['carousel', 'element'], function () {
+        var carousel = layui.carousel;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        carousel.render({
+            elem: '#test1',
+            width: '100%',
+            height: '450px', //设置容器宽度,
+            arrow: 'always' //始终显示箭头
+        });
+        var count = 0;
+        upload.render({
+            elem: '#pic-select'
+            , url: 'https://httpbin.org/post'
+            , accept: 'images'
+            , acceptMime: 'image/jpg,image/png,image/jpeg'
+            {#, number: 5#}
+            , auto: false
+            , multiple: false
+            , bindAction: '#pic-upload'
+            , choose: function (obj){
+                var f = $(".preview");
+                obj.preview(function(index, file, result){
+                    console.log(index); //得到文件索引
+                    console.log(file); //得到文件对象
+                    {#console.log(result); //得到文件base64编码，比如图片#}
+                    var str = '<div class="pic"><img src="' + result + '"/></div';
+                    f.append(str);
+                });
+            }
+            , before: function (obj) {
+                var f = $(".result");
+                f.show();
+                $('.layui-body').animate({
+                    scrollTop: 1600
+                }, 500);
+            }
+            , error: function (index, upload) {
+                layer.msg('网络问题，上传失败', {icon: 5});
+            }
+            , done: function (res, index, upload) { //每个文件提交一次触发一次。详见“请求成功的回调”
+                console.log(res);
+                var tip = $(".tip");
+                var res = $(".res");
+                tip.hide();
+                var str = '<div class="pic"><img src="' + $('.preview')[0].firstChild.firstChild.getAttribute('src') + '"/></div';
+                res.append(str);
+                str = '<div class="text">该图片为<i>假</i>，概率为<i>99.7%</i></div>';
+                res.append(str);
+                {#if(res.code == 0){#}
+                {#    var str = '<div class="pic"><img src="' + res.files.file + '"/></div';#}
+                {#    res.append(str);#}
+                {#    str = '<div class="">';#}
+
+                {#    layer.msg('检测失败请刷新重试', {icon: 5});#}
+            }
+        });
+    });
+</script>
+</html>

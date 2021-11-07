@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="back">
+        <div id="login_panel">
+            <h1>鹰眼</h1>
+            <form action="{% url 'users:login' %}" method="post" class="layui-form">
+                {% csrf_token %}
+                <div class="layui-form-item">
+						<input type="text" name="username" id="username" required  lay-verify="required|username" placeholder="您的用户名" autocomplete="off" class="layui-input" style="height: 40px; font-size: 15px">
+				</div>
+				<div class="layui-form-item">
+						<input type="password" name="password" id="password" required lay-verify="required" placeholder="您的密码" autocomplete="off" class="layui-input"  style="height: 40px; font-size: 15px">
+				</div>
+                <div class="layui-form-item">
+					<button class="layui-btn" lay-submit>登 录</button>
+				</div>
+                <div class="layui-form-item" style="margin-left: 50px; margin-right: 50px; text-align: center; font-size: 13px">
+					还没有账号? <a href="/user/register/" style="color: #ff9d00">马上注册</a>
+				</div>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script>
+    layui.use('form', function() {
+    var form = layui.form;
+    form.verify({
+        username: function(value, item) { //value：表单的值、item：表单的DOM对象
+            if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                return '用户名不能有特殊字符';
+            }
+            if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                return '用户名首尾不能出现下划线\'_\'';
+            }
+            if (/^\d+\d+\d$/.test(value)) {
+                return '用户名不能全为数字';
+            }
+        }
+    });
+    var layer = layui.layer;
+    var msg = '{{ message }}';
+    console.log(msg)
+    if(msg != '') {
+        layer.msg(msg, {icon: 5});
+    }
+});
+</script>
+</html>
