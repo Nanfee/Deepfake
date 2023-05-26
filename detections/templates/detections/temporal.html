@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>时空特征检测</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detections.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div id="header"></div>
+    <div class="layui-side">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree layui-nav-side">
+                <li class="layui-nav-item layui-this"><a href="/detections/temporal/">时空特征检测</a></li>
+                <li class="layui-nav-item"><a href="/detections/low_resolution">低分辨率检测</a></li>
+                <li class="layui-nav-item"><a href="/detections/target/">特定人物检测</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div class="carousel">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                    <div><img src="{% static 'images/st-model.png' %}"></div>
+                    <div><img src="{% static 'images/L0.png' %}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scenery">
+            <h1>问题场景</h1>
+            <div class="question" style="line-height: 40px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在现有的深度伪造检测方法中，各个算法模型都致力于找出伪造数据特有的特征部分与真实数据进行区分对比。在深度伪造生成与检测的军备竞赛中，随着深度伪造生成算法的不断更新与演进，新生成算法所生成数据特征分布将远不同于已有的特征分布，由于现有深度伪造数据集并不包含最新生成算法所生成的数据，在其上训练的检测算法无法有效检测未训练过的伪造数据。
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该算法对深度伪造检测算法存在的低泛化力问题进行了分析，确定了通过时空特征检测来提升模型跨数据集泛化能力的主体思路。针对现有模型对低质量视频样本检测精度低下的问题，通过基于L0滤波的纹理增强算法用于图像增强。
+            </div>
+        </div>
+        <div class="detect">
+            <h1>检测流程</h1>
+            <div class="select2">
+                <p>1. 视频选择</p>
+                <button class="layui-btn" id="pic-select" onclick="clearPreview()">+</button>
+                <div class="preview"></div>
+            </div>
+            <div class="upload">
+                <p>2. 视频上传</p>
+                <div class="upload-btn">
+                    <button id="pic-upload" onclick="upload()"><i class="layui-icon layui-icon-upload"></i>&nbsp;&nbsp;上传
+                    </button>
+                </div>
+            </div>
+            <div class="result">
+                <p>3. 检测结果</p>
+                <div class="tip">
+                    <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>
+                    <br>上传检测中
+                </div>
+                <div class="reslist"></div>
+                <div style="height: 30px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $('#header').load('/common/header/', function (responseTest, textStatus, XMLHttpRequest) {
+        $('.menu1 .layui-nav').children().eq(0).addClass('layui-this');
+    });
+    var files;
+    var count = 0;
+    var result = $(".result");
+    result.hide();
+    layui.use(['form', 'upload', 'carousel'], function () {
+        var upload = layui.upload;
+        var form = layui.form;
+        var carousel = layui.carousel;
+        carousel.render({
+            elem: '#test1',
+            width: '100%',
+            height: '450px', //设置容器宽度,
+            arrow: 'always' //始终显示箭头
+        });
+        upload.render({
+            elem: '#pic-select'
+            , accept: 'video'
+            , acceptMime: 'video/mp4'
+            , number: 1
+            , auto: false
+            , multiple: false
+            , bindAction: '#pic'
+            , choose: function (obj) {
+                files = this.files = obj.pushFile();
+                var f = $(".preview");
+                obj.preview(function (index, file, result) {
+                    // {#console.log(index); //得到文件索引#}
+                    // {#console.log(file); //得到文件对象#}
+                    // {#console.log(result); //得到文件base64编码，比如图片#}
+                    var str = '<div class="pic" style="border: none; display: block;"><video id="' + file.name.substr(0, file.name.indexOf(".")) + '" src="' + result + '" style="width= 100%; height=100%; object-fit: fill"/></div>';
+                    f.append(str);
+                    count++;
+                });
+            }
+            , before: function (obj) {
+
+            }
+            , error: function (index, upload) {
+                console.log('network is wrong')
+            }
+            , done: function (res, index, upload) { //每个文件提交一次触发一次。详见“请求成功的回调”
+                console.log(res);
+            }
+        });
+    });
+
+    function clearPreview() {
+        var f = $('.preview');
+        f.empty();
+        for (var x in this.files) {
+            delete files[x];
+        }
+        count = 0;
+        var result = $(".result");
+        var reslist = $(".reslist");
+        reslist.empty();
+        result.hide();
+    };
+
+    function upload() {
+        var reslist = $(".reslist");
+        reslist.empty();
+        console.log(count);
+        var funcs = [];
+        $('input[type=checkbox]:checked').each(function () {
+            funcs.push($(this).val());
+        });
+            if (count > 0) {
+                var f = $(".result");
+                f.show();
+                $('.tip').show()
+                $('.layui-body').animate({
+                    scrollTop: 1400
+                }, 500);
+                var form = new FormData();
+                form.append('count', count);
+                var funcs = [];
+                $('input[type=checkbox]:checked').each(function () {
+                    funcs.push($(this).val());
+                });
+                form.append('funcs', funcs);
+                console.log(funcs);
+                var c = 0;
+                for (let i in files) {
+                    form.append('files' + c, files[i]);
+                    c++;
+                }
+                $.ajax({
+                    url: '/detections/temporal_detect/',
+                    type: 'POST',
+                    async: true,// 异步上传
+                    data: form,
+                    dataType: "json",
+                    processData: false,
+                    // 告诉jQuery不要去设置Content-Type请求头
+                    contentType: false,
+                    success: function (data) {
+                        $('.tip').hide();
+                        var reslist = $('.reslist');
+                        console.log(data);
+                        var len = data.length;
+                        for (var i = 0; i < len; i++) {
+                            var str = '<div class="res"><div class="pic"><video src="' + $('#' + data[i].name.substr(0, data[i].name.indexOf(".")))[0].src + '" style="width: 250px; height: 170px;"/></div>';
+                            str += '<div class="text" style="position: relative; top: -70px">该视频为'
+                            if (data[i].output[0] > data[i].output[1]) {
+                                str += '<i>假</i>, 概率为<i>' + (data[i].output[0] * 100).toFixed(2) + '%</i></div>';
+                            } else {
+                                str += '<i>真</i>, 概率为<i>' + (data[i].output[1] * 100).toFixed(2) + '%</i></div>';
+                            }
+                            str += '</div>';
+                            reslist.append(str);
+                        }
+                    },
+                    error: function () {
+                        {#layer.msg('出现错误', {icon: 5});#}
+                        window.location.href = '/user/login/';
+                    },
+                });
+            } else {
+                layer.msg('请先选择视频', {icon: 5});
+            }
+    }
+</script>
+</html>

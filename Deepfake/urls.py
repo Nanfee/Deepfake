@@ -21,5 +21,7 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('home/', include('home.urls')),
     path('detections/', include('detections.urls')),
+    path('dataset/', include('dataset.urls')),
+    path('process/', include('process.urls')),
     path('admin/', admin.site.urls),
 ]

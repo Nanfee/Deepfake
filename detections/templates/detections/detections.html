@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
     <link rel="stylesheet" href="{% static 'css/detections.css' %}">
 </head>
-<body class="layui-layout-body">
+<body class="layui-layout-body" style="height: 1000px;">
 <div class="layui-layout layui-layout-admin">
     <div id="header" style="height: 60px"></div>
     <div class="detections-home">
@@ -20,9 +20,9 @@
                 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前，本平台已经集成了如下的检测算法：</p>
         </div>
     </div>
-    <div class="detections-list">
+    <div class="detections-list" style="margin-top: 20px;">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md4">
+            <!-- <div class="layui-col-md4">
                 <div class="layui-card">
                   <div class="layui-card-header">
                       <a href="/detections/two_stream/">双分支网络</a>
@@ -33,13 +33,40 @@
                     * 通过实验验证了模型的有效性，以及SRNet的小型super-solution网络对于模型的影响
                   </div>
                 </div>
+            </div> -->
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="/detections/temporal/">基于时空特征的深度伪造检测</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于L0滤波的纹理特征增强</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>人脸关键点与图像纹理特征融合</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于时空特征信息一致性检测</li>
+                    </ul>
+                  </div>
+                </div>
             </div>
             <div class="layui-col-md4">
                 <div class="layui-card">
-                  <div class="layui-card-header"><a href="/detections/attention/">注意力机制</a></div>
+                  <div class="layui-card-header"><a href="/detections/low_resolution/">基于长纹理特征的深度伪造检测</a></div>
                   <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于膨胀卷积的长纹理特征提取</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于SPD卷积的长纹理特征提取</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于Gram矩阵的长纹理特征提取</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="/detections/target/">面向特定人物的深度伪造检测</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于vggish的音特征提取</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于对比学习的一致性特征学习</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于音视频一致性伪造检测</li>
+                    </ul>
                   </div>
                 </div>
             </div>

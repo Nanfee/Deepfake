@@ -65,10 +65,10 @@ body{
     transform: translateY(-50%);
 }
 .detections-home{
-    position: fixed;
+    /* position: fixed;
     top: 90px;
     left: 0;
-    right: 0;
+    right: 0; */
     height: 400px;
     align-content: center;
     padding-bottom: 10px;
@@ -100,17 +100,18 @@ body{
     transform:translateY(-50%);
 }
 .detections-list{
-    position: fixed;
+    /* position: fixed;
     top: 520px;
     left: 0;
-    right: 0;
-    height: 800px;
+    right: 0; */
+    margin: 20px 50px 0 50px;
+    margin-top: 520px;
     font-size: 20px;
     margin: 0 50px 0 50px;
 }
 .detections-list .layui-card{
     color: #7f7f7f;
-    height: 300px;
+    height: 270px;
     box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -1px rgba(0,0,0,0.11), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 .detections-list .layui-card:hover{
@@ -123,7 +124,11 @@ body{
     color: #ff9d00;
 }
 .detections-list .layui-card .layui-card-body{
+    margin: 20px;
     font-size: 16px;
+}
+.detections-list .layui-card .layui-card-body li{
+    margin-top: 10px;
 }
 .info>h1{
     color: #000;
@@ -232,6 +237,18 @@ body{
     width: 250px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.select2 .pic video{
+    height: 170px;
+    width: 250px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.select1 select{
+    width: 500px;
+}
+.layui-form-select dl dd.layui-this{
+    background-color: #ff9d00;
 }
 #pic-select{
     color: #ff9d00;

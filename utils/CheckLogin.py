@@ -10,12 +10,13 @@ class CheckLogin(MiddlewareMixin):
             if not token:
                 return redirect('/user/login/')
             else:
-                index = token.find('_')
-                name = token[0:index]
-                conn = redis.StrictRedis(host='127.0.0.1', port=6379, decode_responses=True)
-                token1 = conn.get(name)
-                print(token1)
-                print(token)
-                print(token != token1)
-                if token1 == '' or token != token1:
-                    return redirect('/user/login/')
+                # index = token.find('_')
+                # name = token[0:index]
+                # conn = redis.StrictRedis(host='127.0.0.1', port=6379, decode_responses=True)
+                # token1 = conn.get(name)
+                # print(token1)
+                # print(token)
+                # print(token != token1)
+                # if token1 == '' or token != token1:
+                #     return redirect('/user/login/')
+                pass

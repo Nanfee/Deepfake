@@ -32,13 +32,14 @@ def login(request):
         if username and password:
             try:
                 user = User.objects.get(name=username)
+                print(user.name, user.password)
                 if user.password == password:
                     # 将状态保存到缓存
                     token = hashlib.sha1(os.urandom(24)).hexdigest()
                     token = user.name + '_' + token
-                    pool = redis.ConnectionPool(host='127.0.0.1', port=6379, max_connections=10)
-                    conn = redis.Redis(connection_pool=pool, decode_responses=True)
-                    conn.set(user.name, token, ex=86400)
+                    # pool = redis.ConnectionPool(host='127.0.0.1', port=6379, max_connections=10)
+                    # conn = redis.Redis(connection_pool=pool, decode_responses=True)
+                    # conn.set(user.name, token, ex=86400)
                     target = redirect('/home/')
                     target.set_cookie('token', token, expires=86400)
                     return target

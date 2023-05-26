@@ -13,27 +13,37 @@
     <div class="layui-side">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree layui-nav-side">
+                <li class="layui-nav-item"><a href="/detections/temporal/">时空特征检测</a></li>
                 <li class="layui-nav-item layui-this"><a href="/detections/low_resolution">低分辨率检测</a></li>
-                <li class="layui-nav-item"><a href="/detections/cross_gan/">跨GAN检测</a></li>
+                <li class="layui-nav-item"><a href="/detections/target/">特定人物检测</a></li>
             </ul>
         </div>
     </div>
     <div class="layui-body">
+        <div class="carousel">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                    <div><img src="{% static 'images/spd.png' %}"></div>
+                    <div><img src="{% static 'images/gram-net.png' %}"></div>
+                    <div><img src="{% static 'images/dilated-solve.png' %}"></div>
+                </div>
+            </div>
+        </div>
         <div class="scenery">
             <h1>问题场景</h1>
-            <div class="question">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尽管现有的检测算法在相应的数据集上有不错的效果，但是在真实场景中的性能却不理想。在现实场景中，视频或图像的传播过程中往往会引入分辨率以及画质上的损失，这将影响现有检测模型的特征提取能力，从而导致检测性能的下降。
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;针对该场景，平台集成了多个算法用于低分辨率图像的检测，并取得了不错的效果。
+            <div class="question" style="line-height: 40px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尽管现有的检测算法在相应的数据集上有不错的效果，但是在真实场景中的性能却不理想。在现实场景中，视频或图像的传播过程中往往会引入分辨率上的损失，这将影响现有检测模型的特征提取能力，从而导致检测性能的下降。
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;针对该场景，该算法从图像特征提取阶段入手，尝试膨胀卷积、SPD卷积以及Gram矩阵三种不同的方式来从低分辨率图像中提取更有效的长纹理特征信息，实现对低分辨率图像的伪造检测。
             </div>
         </div>
         <div class="detect">
             <h1>检测流程</h1>
             <div class="select1">
-                <p>1. 算法选择</p>
+                <p>1. 模型选择</p>
                 <div class="fun-select layui-form">
-                    <input type="checkbox" name="two" title="双分支神经网络" value="two">
-                    <input type="checkbox" name="B" title="方法B" value="B">
-                    <input type="checkbox" name="C" title="方法C" value="C">
+                    <input type="checkbox" name="dilate" title="DilateResNet" value="dilate">
+                    <input type="checkbox" name="spd" title="SPDResNet" value="spd">
+                    <input type="checkbox" name="gram" title="GramResNet" value="gram">
                 </div>
             </div>
             <div class="select2">
@@ -55,7 +65,7 @@
                     <br>上传检测中
                 </div>
                 <div class="reslist">
-                    <table class="layui-table" lay-skin="row">
+                    <!-- <table class="layui-table" lay-skin="row">
                         <colgroup>
                             <col width="40%">
                             <col width="20%">
@@ -84,7 +94,7 @@
                             <td>假（56.5%）</td>
                         </tr>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
                 <div style="height: 30px"></div>
             </div>
@@ -100,9 +110,18 @@
     });
     var files;
     var count = 0;
-    layui.use(['form', 'upload'], function () {
+    var result = $(".result");
+    result.hide();
+    layui.use(['form', 'upload', 'carousel'], function () {
         var upload = layui.upload;
         var form = layui.form;
+        var carousel = layui.carousel;
+        carousel.render({
+            elem: '#test1',
+            width: '100%',
+            height: '450px', //设置容器宽度,
+            arrow: 'always' //始终显示箭头
+        });
         upload.render({
             elem: '#pic-select'
             , accept: 'images'
@@ -115,9 +134,9 @@
                 files = this.files = obj.pushFile();
                 var f = $(".preview");
                 obj.preview(function (index, file, result) {
-                    {#console.log(index); //得到文件索引#}
-                    {#console.log(file); //得到文件对象#}
-                    {#console.log(result); //得到文件base64编码，比如图片#}
+                    // {#console.log(index); //得到文件索引#}
+                    // {#console.log(file); //得到文件对象#}
+                    // {#console.log(result); //得到文件base64编码，比如图片#}
                     var str = '<div class="pic"><img id="' + file.name.substr(0, file.name.indexOf(".")) + '" src="' + result + '"/></div>';
                     f.append(str);
                     count++;
@@ -138,11 +157,10 @@
     function clearPreview() {
         var f = $('.preview');
         f.empty();
-        {#清空文件队列#}
-        for (var x in files) {
+        for (var x in this.files) {
             delete files[x];
         }
-        count2 = 0;
+        count = 0;
         var result = $(".result");
         var reslist = $(".reslist");
         reslist.empty();
@@ -178,7 +196,7 @@
                     c++;
                 }
                 $.ajax({
-                    url: '/detections/two_stream_detect/',
+                    url: '/detections/low_resolution_detect/',
                     type: 'POST',
                     async: true,// 异步上传
                     data: form,
@@ -193,11 +211,12 @@
                         var len = data.length;
                         for (var i = 0; i < len; i++) {
                             var str = '<div class="res"><div class="pic"><img src="' + $('#' + data[i].name.substr(0, data[i].name.indexOf(".")))[0].src + '"/></div>';
+                            // var str = '<div class="res"><div class="pic"><img src="{% static 'images/spd.png' %}"/></div>';
                             str += '<div class="text">该图片为'
                             if (data[i].output[0] > data[i].output[1]) {
-                                str += '<i>真</i>, 概率为<i>' + (data[i].output[0] * 100).toFixed(2) + '%</i></div>';
+                                str += '<i>假</i>, 概率为<i>' + (data[i].output[0] * 100).toFixed(2) + '%</i></div>';
                             } else {
-                                str += '<i>假</i>, 概率为<i>' + (data[i].output[1] * 100).toFixed(2) + '%</i></div>';
+                                str += '<i>真</i>, 概率为<i>' + (data[i].output[1] * 100).toFixed(2) + '%</i></div>';
                             }
                             str += '</div>';
                             reslist.append(str);
@@ -212,7 +231,7 @@
                 layer.msg('请先选择图片', {icon: 5});
             }
         } else {
-            layer.msg('请选择至少一种算法', {icon: 5});
+            layer.msg('请选择至少一种模型', {icon: 5});
         }
     }
 </script>

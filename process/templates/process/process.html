@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图像处理</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detections.css' %}">
+</head>
+<body class="layui-layout-body" style="height: 1000px;">
+<div class="layui-layout layui-layout-admin">
+    <div id="header" style="height: 60px"></div>
+    <div class="detections-home">
+        <div class="d-logo">
+            <i class="layui-icon layui-icon-engine"></i>
+        </div>
+        <div class="d-text">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数字图像处理，是指应用计算机来合成、变换已有的数字图像，从而产生一种新的效果，并把加工处理后的图像重新输出，已经广泛应用于
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前，本平台集成了如下数据处理方法：</p>
+        </div>
+    </div>
+    <div class="detections-list" style="margin-top: 20px;">
+        <div class="layui-row layui-col-space15">
+            <!-- <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header">
+                      <a href="/detections/two_stream/">双分支网络</a>
+                  </div>
+                  <div class="layui-card-body">
+                    * 通过非线性映射的双分支神经网络模型对于低分辨率人脸的识别具有良好的性能提升<br>
+                    * 通过删除VGG后层，在大幅减少训练参数的同时，提升了分类性能<br>
+                    * 通过实验验证了模型的有效性，以及SRNet的小型super-solution网络对于模型的影响
+                  </div>
+                </div>
+            </div> -->
+            <div class="layui-col-md4">
+              <div class="layui-card">
+                <div class="layui-card-header"><a href="/process/noise/">图像噪声干扰</a></div>
+                <div class="layui-card-body">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过高斯算法生成符合随机正态分布的高斯噪声，之后分别计算每个图像对应的像素值的平方和作为图像的信号功率，通过计算每个图像对应的噪声功率，并将其用于约束生成的高斯噪声强度，最终将原图像与噪声数据合并获取到最终的噪声干扰图像。
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md4">
+              <div class="layui-card">
+                <div class="layui-card-header"><a href="/process/texture/">图像纹理增强</a></div>
+                <div class="layui-card-body">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于原始图片，先计算图像中各个像素点在水平方向和垂直方向的梯度值，生成对应的梯度矩阵，之后通过优化目标图像的与原图像的L2范数以及目标图像的L0范数来实现对于局部细节纹理的过滤。最后将平滑后的图像与原图像进行残差操作获取到局部纹理数据，并将其与原图求和得到最终的增强图像。
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md4">
+              <div class="layui-card">
+                <div class="layui-card-header"><a href="/process/scale/">图像缩放</a></div>
+                <div class="layui-card-body">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于原始图片，同比例在长和宽两个方向对像素进行池化实现缩放。
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $('#header').load('/common/header/', function (responseTest, textStatus, XMLHttpRequest){
+        $('.menu1 .layui-nav').children().eq(2).addClass('layui-this');
+    });
+</script>
+</html>

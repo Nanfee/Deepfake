@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据集</title>
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detections.css' %}">
+</head>
+<body class="layui-layout-body" style="height: 1000px;">
+<div class="layui-layout layui-layout-admin">
+    <div id="header" style="height: 60px"></div>
+    <div class="detections-home">
+        <div class="d-logo">
+            <i class="layui-icon layui-icon-template-1"></i>
+        </div>
+        <div class="d-text">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;深度伪造大部分是以视频分类任务为主要任务目标，目标是通过模型辨识某段视频是否为伪造图像，而数据作为模型训练的核心，自然就成为了检测工作的基础。本站总结整理了常用的深度伪造数据集，介绍了各数据集的简要信息，同时将集成算法所使用的数据集也进行了介绍。
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前，本平台整理了如下的深度伪造数据集：</p>
+        </div>
+    </div>
+    <div class="detections-list" style="margin-top: 20px;">
+        <div class="layui-row layui-col-space15">
+            <!-- <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header">
+                      <a href="/detections/two_stream/">双分支网络</a>
+                  </div>
+                  <div class="layui-card-body">
+                    * 通过非线性映射的双分支神经网络模型对于低分辨率人脸的识别具有良好的性能提升<br>
+                    * 通过删除VGG后层，在大幅减少训练参数的同时，提升了分类性能<br>
+                    * 通过实验验证了模型的有效性，以及SRNet的小型super-solution网络对于模型的影响
+                  </div>
+                </div>
+            </div> -->
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">DFDC</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>119197个视频</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>视频时长均为10s</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>使用DeepFakes、Face2Face生成算法</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">FaceForensics++</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>5000个视频</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>视频质量一般</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>使用Deepfake、Face2Face生成算法</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">Celeb-DF</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>5639个视频</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>视频质量较高，人眼难以识别</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>使用改进Deepfake生成算法</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">纹理增强数据集</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>42909个样本</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>每个样本包含30张人脸图与1个landmark文件</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于DeeperForensics、FaceForensic和Celeb-DF数据集进行处理</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">低分辨率数据集</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>111360个样本</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>每张人脸图像经过不同程度缩放处理</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>基于DeeperForensics、FaceForensic和Celeb-DF数据集进行处理</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card">
+                  <div class="layui-card-header"><a href="https://pan.baidu.com/share/init?surl=EcYX0s4U3kbI1V2vdrP46A">特定人物数据集</a></div>
+                  <div class="layui-card-body">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>1500个样本</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>每个样本包含15张人脸图像与1个音频文件</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>从DFDC数据集中采样</li>
+                        <li><i class="layui-icon layui-icon-note" style="font-size: 20px; color: #7f7f7f; margin-right: 16px;"></i>提取码：yxa1</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script>
+    $('#header').load('/common/header/', function (responseTest, textStatus, XMLHttpRequest){
+        $('.menu1 .layui-nav').children().eq(1).addClass('layui-this');
+    });
+</script>
+</html>

@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,7 @@ SECRET_KEY = '7fbfo3723vej%^!ip&&vxzlfvn6%%6r04)els-^!*-n79jr#gl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.5.66', '127.0.0.1']
+ALLOWED_HOSTS = ['10.212.67.17', '127.0.0.1']
 
 
 # Application definition
@@ -35,6 +36,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'home.apps.HomeConfig',
     'detections.apps.DetectionsConfig',
+    'dataset.apps.DatasetConfig',
+    'process.apps.ProcessConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,9 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'deepfake',
-        'USER': 'root',
-        'PASSWORD': 'buaa123456',
-        'HOST': 'localhost',
+        'USER': 'spendar',
+        'PASSWORD': 'zkn1214',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
